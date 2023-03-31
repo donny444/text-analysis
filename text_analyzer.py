@@ -19,9 +19,8 @@ def count_words_fast(text): #Counting differnt words in text.
 #word_counts = count_words_fast(text)
 def word_stats(word_counts):    #Checking all unique words in text.
     num_unique = len(word_counts)
-    #counts = word_counts.values()
-    #return (num_unique, counts)
-    return num_unique
+    counts = word_counts.values()
+    return (num_unique, counts)
 
 book_dir = "./Books"
 os.listdir(book_dir)
@@ -37,12 +36,11 @@ title_num = 1
 for language in os.listdir(book_dir):
 	for author in os.listdir(book_dir+"/"+language):
 		for title in os.listdir(book_dir+"/"+language+"/"+author):
-			
 			inputfile = book_dir+"/"+language+"/"+author+"/"+title
 			print(inputfile)
 			text = read_book(inputfile)
 			(num_unique, counts) = word_stats(count_words_fast(text))
-			stats.loc[title_num]= language,
+			stats.loc[title_num] = language, #ValueError
 			author.capitalize(),
 			title.replace(".txt", ""),
 			sum(counts), num_unique
@@ -83,36 +81,10 @@ plt.loglog(subset.length,
 		label ="Portuguese",
 		color ="blueviolet")
 
-#plt.legend()
-#plt.xlabel("Book Length")
-#plt.ylabel("Number of Unique words")
-#plt.savefig("fig.pdf")
-#plt.show()
+plt.legend()
+plt.xlabel("Book Length")
+plt.ylabel("Number of Unique words")
+plt.savefig("fig.pdf")
+plt.show()
 
-print("Welcome to Text Analyzer")
-print("[1] Read Book")
-print("[2] Count Words")
-print("[3] Total Unique Words\n")
-select = int(input("Please select the options above: "))
-
-if select == 1:
-    text = str(input("Please insert the file path: "))
-    print(read_book(text))
-elif select == 2:
-    text = str(input("Please insert the text: "))
-    print(count_words_fast(text))
-elif select == 3:
-    text = str(input("Please insert the text: "))
-    text = count_words_fast(text)
-    print(word_stats(text))
-else:
-    print("Select only '1' or '2'")
-
-graph = input("Press D to Plotting Graph: ")
-
-if graph == "D":
-    plt.legend()
-    plt.xlabel("Book Length")
-    plt.ylabel("Number of Unique words")
-    plt.savefig("fig.pdf")
-    plt.show()
+#Source: https://www.geeksforgeeks.org/?p=150194
